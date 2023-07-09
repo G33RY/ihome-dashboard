@@ -1,4 +1,4 @@
-import {json, useRouteData} from "solid-start";
+import {json, refetchRouteData, useRouteData} from "solid-start";
 import {
   createServerData$,
 } from "solid-start/server";
@@ -6,20 +6,22 @@ import Stats from "~/sections/Stats";
 import Header from "~/sections/Header";
 import Shortcuts from "~/sections/Shortcuts";
 import {RouteDataFuncArgs} from "@solidjs/router";
-import {Resource} from "solid-js";
+import {createEffect, createResource, createSignal, onCleanup, Resource} from "solid-js";
 import {getStats, StatsState} from "~/services/stats";
 
 
-export function routeData(): Resource<StatsState|undefined> {
-  return createServerData$(() => {
-    return  getStats()
-  });
-}
+
 
 
 
 export default function Index() {
-  const stats = useRouteData<typeof routeData>();
+
+  const [stats, {refetch}] = createResource(getStats)
+
+
+  const interval = setInterval(() => refetch(), 5000);
+  onCleanup(() => clearInterval(interval));
+
   return (
     <main>
       <div class="flex flex-col p-5 pt-10 items-center min-h-screen">
