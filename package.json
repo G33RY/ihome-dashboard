@@ -3,7 +3,8 @@
   "scripts": {
     "dev": "solid-start dev",
     "build": "solid-start build",
-    "start": "solid-start start"
+    "start": "solid-start start",
+    "deploy": "docker build -t g33ry/custom:dashboard . && docker push g33ry/custom:dashboard"
   },
   "type": "module",
   "devDependencies": {
@@ -27,6 +28,7 @@
     "@solidjs/router": "^0.8.2",
     "axios": "^1.4.0",
     "dotenv": "^16.3.1",
+    "esbuild": "^0.18.11",
     "node-docker-api": "^1.1.22",
     "proxmox-api": "^1.0.2",
     "solid-js": "^1.7.2",

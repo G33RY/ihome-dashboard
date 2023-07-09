@@ -6,7 +6,6 @@ dist
 .netlify
 netlify
 .env
-
 # dependencies
 /node_modules
 package-lock.json
