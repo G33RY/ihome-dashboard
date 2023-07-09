@@ -27,7 +27,7 @@ export default function Index() {
       <div class="flex flex-col p-5 pt-10 items-center min-h-screen">
         <Header class={"mb-5"} />
         <Shortcuts className={"mb-16 mt-5"} />
-        <Stats stats={stats()} />
+        <Stats stats={stats.latest ?? {}} />
       </div>
     </main>
   );

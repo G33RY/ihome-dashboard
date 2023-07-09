@@ -9,18 +9,18 @@ interface StatProps {
     icon: IconProps['name'];
 }
 
-function Stat({title, value, desc, icon}: StatProps) {
+function Stat(props: StatProps) {
 
     return (
         <div class="stat">
             <div class="stat-figure text-primary">
-                <Icon name={icon} />
+                <Icon name={props.icon} />
             </div>
-            <div class="stat-title text-sm">{title}</div>
+            <div class="stat-title text-sm">{props.title}</div>
             <div class="stat-value text-xl">
-                {value ?? '-'}
+                {props.value ?? '-'}
             </div>
-            <div class="stat-desc text-xs">{desc}</div>
+            <div class="stat-desc text-xs">{props.desc}</div>
         </div>
     )
 }
