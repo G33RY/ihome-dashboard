@@ -1,35 +1,18 @@
 import {createSignal} from "solid-js";
 import Stat from "../components/Stat";
 import Icon from "~/components/Icon";
+import {StatsState} from "~/services/stats";
 
 
-interface StatsState {
-    cpuTemp: number;
-    fanSpeed: number;
-    powerConsumption: number;
-    cpuUsage: number;
-    memoryUsage: number;
-    torrentsDownloading: number;
-    torrentsSeeding: number;
-    torrentsError: number;
-    containersRunning: number;
-    containersMemoryUsage: number;
+
+
+
+interface StatsProps {
+    stats?: StatsState;
 }
+function Stats({stats: _stats}: StatsProps) {
 
-function Stats() {
-
-    const [stats] = createSignal<StatsState>({
-        cpuTemp: 23,
-        fanSpeed: 31,
-        powerConsumption: 71,
-        cpuUsage: 12,
-        memoryUsage: 3.6,
-        torrentsDownloading: 2,
-        torrentsSeeding: 1,
-        torrentsError: 0,
-        containersRunning: 20,
-        containersMemoryUsage: 3.2,
-    });
+    const [stats] = createSignal<StatsState>(_stats ?? {});
 
     return (<>
         <div class="gap-2  flex justify-center w-full pl-6 items-center text-base-content/30 mt-5">
@@ -38,7 +21,7 @@ function Stats() {
         </div>
         <div class="stats stats-vertical md:stats-horizontal">
             <Stat title={"CPU Temp"} value={stats().cpuTemp} icon={"temperature-three-quarters"} desc={"Degrees (°C)"} />
-            <Stat title={"Fan Speed"} value={stats().fanSpeed} icon={"fan"} desc={"Percentage (%)"} />
+            <Stat title={"Fan Speed"} value={stats().fanSpeed} icon={"fan"} desc={"Percentage (%)"}  />
             <Stat title={"Power Consumption"} value={stats().powerConsumption} icon={"bolt"} desc={"Watts (W)"} />
             <Stat title={"CPU Usage"} value={stats().cpuUsage} icon={"microchip"} desc={"Percentage (%)"} />
             <Stat title={"Memory Usage"} value={stats().memoryUsage} icon={"memory"} desc={"Gigabytes (GB)"} />
