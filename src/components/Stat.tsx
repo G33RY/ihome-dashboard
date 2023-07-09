@@ -1,4 +1,4 @@
-import Icon, {IconProps} from "./Icon.tsx";
+import Icon, {IconProps} from "./Icon.js";
 
 
 interface StatProps {

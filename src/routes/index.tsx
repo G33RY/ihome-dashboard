@@ -7,8 +7,9 @@ import server$, {
 } from "solid-start/server";
 import { createWebSocketServer } from "solid-start/websocket";
 import { getUser, logout } from "~/session";
-import Stats from "~/components/Stats";
-import Header from "~/components/Header";
+import Stats from "~/sections/Stats";
+import Header from "~/sections/Header";
+import Shortcuts from "~/sections/Shortcuts";
 
 const pingPong = createWebSocketServer(
   server$(function (webSocket) {
@@ -46,9 +47,8 @@ export default function Home() {
   return (
     <main>
       <div class="flex flex-col p-5 pt-10 items-center min-h-screen">
-        <div class="mb-5">
-          <Header />
-        </div>
+        <Header class={"mb-5"} />
+        <Shortcuts className={"mb-16 mt-5"} />
         <Stats />
         <div></div>
       </div>

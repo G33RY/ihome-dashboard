@@ -1,7 +1,11 @@
 
-function Header() {
+
+interface HeaderProps {
+    class?: string;
+}
+function Header(props: HeaderProps) {
     return (
-        <div class="text-center">
+        <div class={`${props.class ?? ''} text-center`}>
             <h1 class="text-5xl font-bold">
                 <span class="text-primary">i</span>
                 Home

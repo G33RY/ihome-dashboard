@@ -11,11 +11,12 @@ export type IconProps = Omit<JSX.HTMLAttributes<HTMLElement>, "class"> & {
     name?: SolidIcons.IconName & BrandIcons.IconName & RegularIcons.IconName,
     size?: SizeProp,
     prefix?: 'fas'|'fab'|'far',
+    file?: string,
     className?: string,
 }
 
 
-export default function Icon({ name, prefix = 'fas', size = "1x", className = "", ...props } : IconProps) {
+export default function Icon({ name, file, prefix = 'fas', size = "1x", className = "", ...props } : IconProps) {
     return (
         <i
             class={`${prefix} fa-${name} fa-${size} ${className}`}
