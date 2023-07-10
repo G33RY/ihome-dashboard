@@ -116,6 +116,13 @@ export const SHORTCUT_ACTIONS: ShortcutCategory[] = [
                     window.open("http://nginx.ihome/")
                 }
             },
+            {
+                title: "PiHole",
+                file: "/icons/pihole.png",
+                action: () => {
+                    window.open("http://pihole.ihome/")
+                }
+            },
         ]
     },
 ]

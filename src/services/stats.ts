@@ -14,6 +14,7 @@ export interface StatsState {
     memoryUsage?: number;
     torrentsDownloading?: number;
     torrentsSeeding?: number;
+    torrentsPaused?: number;
     torrentsError?: number;
     containersRunning?: number;
     containersMemoryUsage?: number;
@@ -27,7 +28,7 @@ export const getStats = server$(async (): Promise<StatsState> => {
         fanSpeed,
         powerConsumption,
         [cpuUsage, memoryUsage],
-        [torrentsDownloading, torrentsSeeding, torrentsError],
+        [torrentsDownloading, torrentsPaused, torrentsSeeding, torrentsError],
         [containersRunning, containersMemoryUsage]
     ] = await Promise.all([
         getCpuTemp(),
@@ -120,7 +121,7 @@ async function getPowerConsumption(): Promise<number | undefined> {
     return response.last_5min_avg
 }
 
-async function getTorrentStats(): Promise<[number|undefined, number|undefined, number|undefined]> {
+async function getTorrentStats(): Promise<[number|undefined, number|undefined, number|undefined, number|undefined]> {
     const transmission = new Transmission({
         host: process.env.TRANSMISSION_IP ?? '',
         port: Number(process.env.TRANSMISSION_PORT ?? 9091),
@@ -131,12 +132,13 @@ async function getTorrentStats(): Promise<[number|undefined, number|undefined, n
     })
     let torrents = await transmission.getTorrents()
     if(!torrents) {
-        return [undefined, undefined, undefined]
+        return [undefined, undefined, undefined, undefined]
     }
 
     let torrentsDownloading = 0
     let torrentsSeeding = 0
     let torrentsError = 0
+    let torrentsPaused = 0
 
     for (const torrent of torrents) {
         if(!torrent.percentDone) continue
@@ -150,9 +152,13 @@ async function getTorrentStats(): Promise<[number|undefined, number|undefined, n
         if(torrent.rateDownload == 0 && torrent.rateUpload == 0 && torrent.percentDone < 1 && torrent.percentDone > 0) {
             torrentsError++
         }
+
+        // if(torrent.rateDownload == 0 && torrent.rateUpload == 0 && torrent.percentDone < 1 && torrent.percentDone > 0) {
+        //     torrentsPaused++
+        // }
     }
 
-    return [torrentsDownloading, torrentsSeeding, torrentsError]
+    return [torrentsDownloading, torrentsPaused, torrentsSeeding, torrentsError]
 }
 
 const httpsAgent = new https.Agent({
